@@ -1,7 +1,7 @@
-import { getDb, putDb } from './database.js';
-import { header } from './header.js';
+import { getDb, putDb } from './database';
+import { header } from './header';
 
-export default class {
+export default class Editor {
   constructor() {
     const localData = localStorage.getItem('content');
 
@@ -35,9 +35,7 @@ export default class {
     // Save the content of the editor when the editor itself is loses focus
     this.editor.on('blur', () => {
       console.log('The editor has lost focus');
-      putDb(localStorage.getItem('content')).then(() => {
-        console.log('Content saved to IndexedDB');
-      });
+      putDb(localStorage.getItem('content'));
     });
   }
 }

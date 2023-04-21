@@ -12,23 +12,27 @@ const initdb = async () =>
     },
   });
 
-export const putDb = async (content) => {
+const putDb = async (content) => {
   const db = await initdb();
   const tx = db.transaction('jate', 'readwrite');
   const store = tx.objectStore('jate');
-  await store.put(content);
-  await tx.done;
-  console.log('content added to jate database');
+  await store.add(content);
+  await tx.complete;
+  console.log('Content added to database:', content);
 };
 
-export const getDb = async () => {
+const getDb = async () => {
   const db = await initdb();
   const tx = db.transaction('jate', 'readonly');
   const store = tx.objectStore('jate');
-  const allContent = await store.getAll();
-  await tx.done;
-  console.log('retrieved content from jate database');
-  return allContent;
+  const content = await store.getAll();
+  await tx.complete;
+  console.log('Content retrieved from database:', content);
+  return content;
 };
 
 initdb();
+
+// Example usage:
+putDb({ name: 'John Doe', email: 'johndoe@example.com' });
+getDb();
